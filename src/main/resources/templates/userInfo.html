@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<p>User information</p>
+<label>
+    Name: <p th:text="${userName}"></p> <br>
+</label>
+<label>
+    Role: <p th:text="${userRole}"></p> <br>
+</label>
+
+<h4><a href="/logout">Выйти</a></h4>
+
+</body>
+</html>

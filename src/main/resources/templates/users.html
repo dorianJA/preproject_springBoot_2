@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD APP</title>
+</head>
+<body>
+<h1>
+<!--    <th th:text="#{userHeader}">-->
+    Users
+</h1>
+<table border="1px">
+    <tr>
+        <td>Name</td>
+        <td>Age</td>
+        <th>Edit user</th>
+        <th>Delete user</th>
+    </tr>
+
+    <th:block th:each="user : ${listUser}">
+        <tr>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.age}"></td>
+            <td><a th:href="@{/admin/edit(id=${user.id})}">edit</a></td>
+            <td><a th:href="@{/admin/delete(id=${user.id})}">delete</a></td>
+        </tr>
+    </th:block>
+</table>
+<p>Add user</p>
+
+<!--<form th:action="@{/admin/add}" th:object="${newUser}" method="post">-->
+<!--    <p>Name: <input type="text" th:field="*{name}"/>-->
+<!--        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>-->
+<!--    </p>-->
+<!--    <p>Age: <input type="text" th:field="*{age}"/>-->
+<!--        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name error</span>-->
+<!--    </p>-->
+<!--    <p>Password: <input type="text" th:field="*{password}"/>-->
+<!--        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</span>-->
+<!--    </p>-->
+<!--    <input type="submit" value="add"> <br>-->
+
+<!--</form>-->
+
+<form  th:action="@{/admin/add}" th:object="${newUser}" method="post">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Age:</td>
+            <td><input type="text" th:field="*{age}" /></td>
+            <td th:if="${#fields.hasErrors('age')}" th:errors="*{age} ">Name Error</td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="password" th:field="*{password}"/></td>
+            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">add User</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<h4><a href="/logout">Выйти</a></h4>
+
+</body>
+</html>
