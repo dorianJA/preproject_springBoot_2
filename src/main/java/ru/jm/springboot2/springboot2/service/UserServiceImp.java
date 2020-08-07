@@ -9,11 +9,15 @@ import ru.jm.springboot2.springboot2.model.Role;
 import ru.jm.springboot2.springboot2.model.User;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
+
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -21,7 +25,7 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void addUser(User user) {
-        user.setRoles(Collections.singleton(new Role(1L,"USER")));
+        user.setRoles(Collections.singleton(new Role(1L, "USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
