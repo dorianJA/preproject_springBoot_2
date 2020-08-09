@@ -18,45 +18,73 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Name can't be empty")
-    @Size(min=2, max=30)
-    private String name;
+    @Size(min = 2, max = 30)
+    private String email;
     @NotBlank(message = "Password can't be empty")
     private String password;
 
-    @Min(value = 10,message = "Age must be more than 10")
+    @Min(value = 10, message = "Age must be more than 10")
     private String age;
+
+    private String firstName;
+    private String lastName;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(String name, String password, String age) {
-        this.name = name;
+    public User(String email, String password, String age) {
+        this.email = email;
         this.password = password;
         this.age = age;
     }
 
-    public User(String name, String password, String age, Role role){
-        this.name = name;
+    public User(String email, String password, String age, Role role) {
+        this.email = email;
         this.password = password;
         this.age = age;
         roles.add(role);
     }
 
-    public User(String name, String password, String age, Set<Role> roles){
-        this.name = name;
+    public User(String email, String password, String age, Set<Role> roles) {
+        this.email = email;
         this.password = password;
         this.age = age;
         this.roles = roles;
     }
 
-    public User(){
+    public User(@NotBlank(message = "Name can't be empty") @Size(min = 2, max = 30) String email, @NotBlank(message = "Password can't be empty") String password, @Min(value = 10, message = "Age must be more than 10") String age, String firstName, String lastName, Set<Role> roles) {
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roles = roles;
+    }
+
+    public User() {
 
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public Set<Role> getRoles() {
@@ -67,8 +95,8 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String name) {
+        this.email = name;
     }
 
     @Override
@@ -82,7 +110,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.name;
+        return this.email;
     }
 
     @Override
@@ -128,7 +156,7 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "name='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", age=" + age +
                 '}';

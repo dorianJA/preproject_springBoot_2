@@ -31,10 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userService;
 
 
-//    @Bean
-//    public UserDetailsServiceImpl getUserService(){
-//        return new UserDetailsServiceImpl();
-//    }
+    @Bean
+    public UserDetailsServiceImpl getUserService(){
+        return new UserDetailsServiceImpl();
+    }
 
 
     @Override

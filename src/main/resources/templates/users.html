@@ -9,6 +9,30 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>CRUD APP</title>
 </head>
+
+
+<script type="text/javascript">
+    function send_user() {
+        $.ajax({
+            type: 'POST',
+            url: '/add_user',
+            dataType: 'json',
+            contentType: 'application/json',
+            cache: false,
+            data: JSON.stringify({
+                firstName: $("#first_name").val(),
+                lastName: $("#last_name").val(),
+                age: $("#user_age").val(),
+                email: $("#user_email").val(),
+                password: $("#user_password").val(),
+                roles: $("#user_role").text()
+
+            })
+        })
+    }
+</script>
+
+
 <body>
 <!--    <th th:text="#{userHeader}">-->
 <div class="container-fluid text-light bg-dark p-2 mb-3">
@@ -21,7 +45,7 @@
             <p style="display: inline" th:text="${roles}"></p>
         </div>
         <div class="col text-right">
-            <a class="logout" th:href="@{logout}">Logout</a>
+            <a class="logout" th:href="@{/logout}">Logout</a>
         </div>
     </div>
 
@@ -34,14 +58,17 @@
         <!--            Левая панель навигации-->
         <div class="col-2">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Admin</a>
-                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">User</a>
+                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                   aria-controls="v-pills-home" aria-selected="true">Admin</a>
+                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                   aria-controls="v-pills-profile" aria-selected="false">User</a>
             </div>
         </div>
         <!--            Right content-->
         <div class="col-10 bg-light">
             <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab">
                     <h2>Admin panel</h2>
                     <!--                        Вкладки панели навигации-->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -56,7 +83,8 @@
                     </ul>
                     <!--                        Админ страница вкладка User tables-->
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="userTable" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="userTable" role="tabpanel"
+                             aria-labelledby="home-tab">
                             <div class="all-users p-3" data-toggle="collapse"
                                  data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
                                 All users
@@ -78,8 +106,8 @@
                                 <th:block th:each="user : ${listUser}">
                                     <tr>
                                         <td th:text="${user.id}"></td>
-                                        <td th:text="${user.name}"></td>
-                                        <td th:text="${user.surname}"></td>
+                                        <td th:text="${user.firstName}"></td>
+                                        <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.age}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.roles}"></td>
@@ -102,42 +130,51 @@
                             </table>
                         </div>
                         <!--                            Админ страница вкладка Add new user-->
-                        <div class="text-center tab-pane fade bg-white" id="newUser" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="text-center tab-pane fade bg-white" id="newUser" role="tabpanel"
+                             aria-labelledby="profile-tab">
                             <div class="row m-auto bg-light p-3">
                                 <div class="p-3" data-toggle="collapse"
-                                     data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                                     data-target="#collapseExample" aria-expanded="true"
+                                     aria-controls="collapseExample">
                                     Add new user
                                 </div>
                             </div>
                             <form class="w-25 m-auto p-5">
                                 <div class="form-group">
-                                    <label >First name</label>
-                                    <input type="text" class="form-control" placeholder="Enter name">
+                                    <label>First name</label>
+                                    <input type="text" id="first_name"  class="form-control"
+                                           placeholder="Enter name">
                                 </div>
                                 <div class="form-group">
-                                    <label >Last name</label>
-                                    <input type="text" class="form-control" placeholder="Enter last name">
+                                    <label>Last name</label>
+                                    <input type="text" id="last_name"  class="form-control"
+                                           placeholder="Enter last name">
                                 </div>
                                 <div class="form-group">
                                     <label>Age</label>
-                                    <input type="text" class="form-control" placeholder="Age">
+                                    <input type="text" id="user_age" class="form-control"
+                                           placeholder="Age">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" placeholder="Email adress">
+                                    <input type="email" id="user_email"  class="form-control"
+                                           placeholder="Email adress">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" class="form-control" placeholder="Password">
+                                    <input type="password" id="user_password"
+                                           class="form-control" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <label>Role</label>
-                                    <select name="role" id="" th:field="*{roles}" class="form-control" SIZE="2">
-                                        <option value="">ADMIN</option>
-                                        <option value="">USER</option>
+                                    <select name="role" id="user_role"  class="form-control"
+                                            SIZE="2">
+                                        <option value="ADMIN">ADMIN</option>
+                                        <option value="USER">USER</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-success w-50">Add new user</button>
+                                <button type="submit" onclick="send_user()" class="btn btn-success w-50">Add new user
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -163,8 +200,10 @@
                         <th:block th:each="user : ${listUser}">
                             <tr>
                                 <td th:text="${user.id}"></td>
-                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.firstName}"></td>
+                                <td th:text="${user.lastName}"></td>
                                 <td th:text="${user.age}"></td>
+                                <td th:text="${user.email}"></td>
                                 <td th:text="${user.roles}"></td>
                             </tr>
                         </th:block>
@@ -191,36 +230,31 @@
                         <form th:action="@{/admin}" method="post" th:object="${newUser}">
                             <div class="form-group">
                                 <label>ID</label>
-                                <input disabled type="text" name="id" th:field="*{id}" class="form-control">
+                                <input disabled type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>First name</label>
-                                <input type="text" id="firstname" name="firstname" th:field="*{firstname}" class="form-control">
-                                <span class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
+                                <input type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Last name</label>
-                                <input type="text" id="lastname" name="lastname" th:field="*{lastname}" class="form-control">
-                                <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span>
+                                <input type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Age</label>
-                                <input type="number" id="age" name="age" th:field="*{lastname}" class="form-control">
-                                <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span>
+                                <input type="number" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" id="email" name="email" th:field="*{email}" class="form-control">
-                                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                <input type="email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" name="password" th:field="*{password}" class="form-control">
-                                <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                                <input type="password" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Role</label>
-                                <select name="role"  th:field="*{roles}" class="form-control" SIZE="2">
+                                <select name="role" class="form-control" SIZE="2">
                                     <option value="">ADMIN</option>
                                     <option value="">USER</option>
                                 </select>
@@ -256,29 +290,29 @@
                             </div>
                             <div class="form-group">
                                 <label>First name</label>
-                                <input disabled type="text" id="firstname" name="firstname"  class="form-control">
+                                <input disabled type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Last name</label>
-                                <input disabled type="text" id="lastname" name="lastname" th:field="*{lastname}" class="form-control">
+                                <input disabled type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Age</label>
-                                <input disabled type="number" id="age" name="age" th:field="*{lastname}" class="form-control">
+                                <input disabled type="number" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input disabled type="email" id="email" name="email" th:field="*{email}" class="form-control">
+                                <input disabled type="email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input disabled type="password" name="password" th:field="*{password}" class="form-control">
+                                <input disabled type="password" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Role</label>
-                                <select disabled name="role"  th:field="*{roles}" class="form-control" SIZE="2">
-                                    <option value="">ADMIN</option>
-                                    <option value="">USER</option>
+                                <select disabled name="role" class="form-control" SIZE="2">
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="USER">USER</option>
                                 </select>
                             </div>
                         </form>
@@ -329,12 +363,16 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </body>
 </html>
