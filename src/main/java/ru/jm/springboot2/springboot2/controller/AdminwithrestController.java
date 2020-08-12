@@ -12,9 +12,10 @@ public class AdminwithrestController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/add_user")
-    public void addUser(@RequestBody User user){
+    @PostMapping("/admin/add_user")
+    public void addUser(@RequestBody User user) {
         userService.addUser(user);
+
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.jm.springboot2.springboot2.Repository.RoleRepository;
 import ru.jm.springboot2.springboot2.model.Role;
 import ru.jm.springboot2.springboot2.model.User;
 import ru.jm.springboot2.springboot2.service.UserService;
@@ -29,20 +30,21 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     @GetMapping(value = "/admin/users")
     public String tableUsers(ModelMap model,@AuthenticationPrincipal UserDetails user) {
         List<User> users = userService.getAllUsers();
+        List<Role> roles = (List<Role>) roleRepository.findAll();
+        User userInfo = userService.getUserByName(user.getUsername());
         model.addAttribute("newUser", new User());
         model.addAttribute("listUser", users);
-        //add roles and name
-        Set<Role> roles = (Set<Role>) user.getAuthorities();
-        List<String> list = new ArrayList<>();
-        for (Role r : roles) {
-            list.add(r.getName());
-        }
-        model.addAttribute("usName",user.getUsername());
-        model.addAttribute("roles",list);
+        model.addAttribute("aboutUser",userInfo);
+        model.addAttribute("allRoles",roles);
+
+
         return "users";
     }
 
@@ -71,8 +73,8 @@ public class AdminController {
     }
 
     @PostMapping(value = "/admin/add")
-    public String addUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model) {
-
+    public String addUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model,@RequestParam(required = false, name = "user_role") String name) {
+        System.out.println(name);
         userValidator.validate(newUser,result);
 
         if (result.hasErrors()) {

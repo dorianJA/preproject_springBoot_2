@@ -54,7 +54,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(@NotBlank(message = "Name can't be empty") @Size(min = 2, max = 30) String email, @NotBlank(message = "Password can't be empty") String password, @Min(value = 10, message = "Age must be more than 10") String age, String firstName, String lastName, Set<Role> roles) {
+    public User(String email, String password,String age, String firstName, String lastName, Set<Role> roles) {
         this.email = email;
         this.password = password;
         this.age = age;
@@ -156,10 +156,12 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + email + '\'' +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", age=" + age +
+                ", age='" + age + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", roles=" + roles +
                 '}';
     }
-
 }

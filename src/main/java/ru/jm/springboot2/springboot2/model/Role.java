@@ -35,6 +35,14 @@ public class Role implements GrantedAuthority {
         this.name = role;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setName(String role) {
         this.name = role;
     }
@@ -56,4 +64,6 @@ public class Role implements GrantedAuthority {
     public String toString() {
         return name;
     }
+
+
 }
